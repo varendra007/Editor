@@ -9,37 +9,21 @@ import MiniDrawer, {
 	// TransitionDoc,
 } from './component/Editor/MiniDrawer';
 import editorDimensionsConstants from './component/Editor/editorDimensionsConstants';
+import {
+	MusicAndSFX,
+	RecordAndCreate,
+	StockImages,
+	StockVideo,
+	Templates,
+	Text,
+	YourMedia,
+} from './component/Editor/MiniDrawerComponent';
 
-const miniDrawerWidth = 70;
+const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
 const bottomDrawerHeight = 350;
 let leftDrawerOpen = false;
 
-// const editorWidth =
-
-// function TransitionLeft(props) {
-// 	return (
-// 		<Slide
-// 			{...props}
-// 			direction="right"
-// 			style={{ margin: '0' }}
-// 			timeout={{ enter: 820, exit: 500 }}
-// 		>
-// 			<div
-// 				style={{
-// 					width: `${drawerComponentWidth}px`,
-// 					height: '100vh',
-// 					background: '#212425',
-// 					borderRight: '2px solid grey',
-// 					color: 'white',
-// 				}}
-// 				// id="drawer-component"
-// 			>
-// 				aldfjaldsf
-// 			</div>
-// 		</Slide>
-// 	);
-// }
 function TransitionBottom(props) {
 	return (
 		<Slide
@@ -71,7 +55,7 @@ function TransitionBottom(props) {
 }
 
 function App() {
-	const [isDrawerOpen, setIsOpenDrawer] = React.useState(false);
+	const [isDrawerOpen, setIsOpenDrawer] = React.useState(true);
 	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(false);
 	const [transitionLeft, setTransitionLeft] = React.useState(undefined);
 	const [transitionBottom, setTransitionBottom] = React.useState(undefined);
@@ -91,9 +75,6 @@ function App() {
 			setTransitionLeft(() => Transition);
 			setIsOpenDrawer(true);
 			leftDrawerOpen = true;
-		} else {
-			// setIsOpenDrawer(false);
-			// leftDrawerOpen = false;
 		}
 		setActiveIndex(curInd);
 	};
@@ -120,8 +101,14 @@ function App() {
 					{/* Mini Drawer */}
 					<MiniDrawer
 						onClick={handleClickLeft(TransitionLeft)}
-						handleDoc={handleLeftNav(TransitionLeft, 1)}
-						handleFile={handleLeftNav(TransitionLeft, 2)}
+						handleYourMedia={handleLeftNav(TransitionLeft, 0)}
+						handleRecordAndCreate={handleLeftNav(TransitionLeft, 1)}
+						handleTemplates={handleLeftNav(TransitionLeft, 2)}
+						handleMusicAndSFX={handleLeftNav(TransitionLeft, 3)}
+						handleStockImages={handleLeftNav(TransitionLeft, 4)}
+						handleStockVideos={handleLeftNav(TransitionLeft, 5)}
+						handleText={handleLeftNav(TransitionLeft, 6)}
+						currentIndex={activeIndex}
 					/>
 					{/* DrawerContent */}
 
@@ -147,9 +134,13 @@ function App() {
 								color: 'white',
 							}}
 						>
-							{activeIndex === 0 && <>Media</>}
-							{activeIndex === 1 && <> Doc</>}
-							{activeIndex === 2 && <> File</>}
+							{activeIndex === 0 && <YourMedia />}
+							{activeIndex === 1 && <RecordAndCreate />}
+							{activeIndex === 2 && <Templates />}
+							{activeIndex === 3 && <MusicAndSFX />}
+							{activeIndex === 4 && <StockImages />}
+							{activeIndex === 5 && <StockVideo />}
+							{activeIndex === 6 && <Text />}
 						</div>
 					</Snackbar>
 				</div>

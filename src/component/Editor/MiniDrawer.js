@@ -13,7 +13,6 @@ const useStyles = makeStyles({
 });
 
 export function TransitionLeft(props) {
-	// const classes = useStyles();
 	return (
 		<Slide
 			{...props}
@@ -24,8 +23,41 @@ export function TransitionLeft(props) {
 	);
 }
 
+const DrawerButtons = (props) => {
+	return (
+		<div
+			style={{
+				padding: '13px 0',
+				cursor: 'pointer',
+				background: props.active ? '#272731' : '',
+			}}
+			onClick={props.onClick}
+		>
+			<img
+				src={props.imgSrc}
+				alt="menu"
+				style={{
+					cursor: 'pointer',
+					width: props.size ? props.size : '20px',
+					height: 'auto',
+				}}
+			/>
+			<p
+				style={{
+					color: 'grey',
+					fontSize: '13px',
+					fontWeight: '500',
+					textAlign: 'center',
+					margin: '5px 0',
+				}}
+			>
+				{props.title}
+			</p>
+		</div>
+	);
+};
+
 const MiniDrawer = (props) => {
-	// const classes = useStyles();
 	return (
 		<div
 			style={{
@@ -48,7 +80,50 @@ const MiniDrawer = (props) => {
 					onClick={props.onClick}
 				/>
 			</div>
-			<div style={{ margin: '20px 0 10px' }}>
+			<DrawerButtons
+				title="Your Media"
+				active={props.currentIndex === 0}
+				imgSrc="./images/your_media.svg"
+				onClick={props.handleYourMedia}
+				size="25px"
+			/>
+			<DrawerButtons
+				title="Record & Create"
+				active={props.currentIndex === 1}
+				imgSrc="./images/your_media.svg"
+				onClick={props.handleRecordAndCreate}
+			/>
+			<DrawerButtons
+				title="Templates"
+				active={props.currentIndex === 2}
+				imgSrc="./images/your_media.svg"
+				onClick={props.handleTemplates}
+			/>
+			<DrawerButtons
+				title="Music & SFX"
+				active={props.currentIndex === 3}
+				imgSrc="./images/music.svg"
+				onClick={props.handleMusicAndSFX}
+			/>
+			<DrawerButtons
+				title="Stock Images"
+				active={props.currentIndex === 4}
+				imgSrc="./images/stock_images.svg"
+				onClick={props.handleStockImages}
+			/>
+			<DrawerButtons
+				title="Stock Videos"
+				active={props.currentIndex === 5}
+				imgSrc="./images/your_media.svg"
+				onClick={props.handleStockVideos}
+			/>
+			<DrawerButtons
+				title="Text"
+				active={props.currentIndex === 6}
+				imgSrc="./images/text.svg"
+				onClick={props.handleText}
+			/>
+			{/* <div style={{ margin: '20px 0 10px' }}>
 				<img
 					src="./images/menu_btn.svg"
 					alt="menu"
@@ -63,7 +138,7 @@ const MiniDrawer = (props) => {
 					style={{ cursor: 'pointer' }}
 					onClick={props.handleFile}
 				/>
-			</div>
+			</div> */}
 		</div>
 	);
 };
