@@ -6,8 +6,9 @@ import Slide from '@mui/material/Slide';
 import './App.css';
 import MiniDrawer, {
 	TransitionLeft,
-	// TransitionMedia,
+	// TransitionDoc,
 } from './component/Editor/MiniDrawer';
+import editorDimensionsConstants from './component/Editor/editorDimensionsConstants';
 
 const miniDrawerWidth = 70;
 const drawerComponentWidth = 300;
@@ -85,16 +86,25 @@ function App() {
 			leftDrawerOpen = false;
 		}
 	};
+	const handleLeftNav = (Transition, curInd) => () => {
+		if (!isDrawerOpen) {
+			setTransitionLeft(() => Transition);
+			setIsOpenDrawer(true);
+			leftDrawerOpen = true;
+		} else {
+			// setIsOpenDrawer(false);
+			// leftDrawerOpen = false;
+		}
+		setActiveIndex(curInd);
+	};
 	const handleClickBottom = (Transition) => () => {
 		setTransitionBottom(() => Transition);
 		setIsBottomDrawerOpen(true);
 	};
 
-	React.useEffect(() => {
-		console.log(document.getElementById('mini-drawer').style.width);
-		// console.log(document.getElementById('drawer-component').style.width);
-	}, []);
-	// ! setting widhths
+	// !
+	const [activeIndex, setActiveIndex] = React.useState(0);
+
 	return (
 		<div className="App">
 			<div
@@ -108,7 +118,11 @@ function App() {
 				{/* Left Part */}
 				<div>
 					{/* Mini Drawer */}
-					<MiniDrawer onClick={handleClickLeft(TransitionLeft)} />
+					<MiniDrawer
+						onClick={handleClickLeft(TransitionLeft)}
+						handleDoc={handleLeftNav(TransitionLeft, 1)}
+						handleFile={handleLeftNav(TransitionLeft, 2)}
+					/>
 					{/* DrawerContent */}
 
 					<Snackbar
@@ -123,7 +137,21 @@ function App() {
 							left: `${miniDrawerWidth}px`,
 						}}
 						id="drawer-component"
-					></Snackbar>
+					>
+						<div
+							style={{
+								width: `${editorDimensionsConstants.drawerComponentWidth}px`,
+								height: '100vh',
+								background: '#212425',
+								borderRight: '2px solid grey',
+								color: 'white',
+							}}
+						>
+							{activeIndex === 0 && <>Media</>}
+							{activeIndex === 1 && <> Doc</>}
+							{activeIndex === 2 && <> File</>}
+						</div>
+					</Snackbar>
 				</div>
 				{/* Right Part */}
 				<div

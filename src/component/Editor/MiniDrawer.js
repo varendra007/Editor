@@ -1,33 +1,31 @@
 import * as React from 'react';
 import Slide from '@mui/material/Slide';
+import { makeStyles } from '@mui/styles';
 import dimensions from './editorDimensionsConstants';
-
-let curIndex = 0;
+const useStyles = makeStyles({
+	mini: {
+		width: `${dimensions.drawerComponentWidth}px`,
+		height: '100vh',
+		background: '#212425',
+		borderRight: '2px solid grey',
+		color: 'white',
+	},
+});
 
 export function TransitionLeft(props) {
+	// const classes = useStyles();
 	return (
 		<Slide
 			{...props}
 			direction="right"
 			style={{ margin: '0' }}
 			timeout={{ enter: 820, exit: 500 }}
-		>
-			<div
-				style={{
-					width: `${dimensions.drawerComponentWidth}px`,
-					height: '100vh',
-					background: '#212425',
-					borderRight: '2px solid grey',
-					color: 'white',
-				}}
-				// id="drawer-component"
-			></div>
-		</Slide>
+		></Slide>
 	);
 }
 
 const MiniDrawer = (props) => {
-	const [activeIndex, setActiveIndex] = React.useState(0);
+	// const classes = useStyles();
 	return (
 		<div
 			style={{
@@ -50,15 +48,22 @@ const MiniDrawer = (props) => {
 					onClick={props.onClick}
 				/>
 			</div>
-			<p
-				onClick={() => {
-					setActiveIndex(1);
-					curIndex = activeIndex;
-				}}
-				style={{ color: 'white' }}
-			>
-				dfkj
-			</p>
+			<div style={{ margin: '20px 0 10px' }}>
+				<img
+					src="./images/menu_btn.svg"
+					alt="menu"
+					style={{ cursor: 'pointer' }}
+					onClick={props.handleDoc}
+				/>
+			</div>
+			<div style={{ margin: '20px 0 10px' }}>
+				<img
+					src="./images/menu_btn.svg"
+					alt="menu"
+					style={{ cursor: 'pointer' }}
+					onClick={props.handleFile}
+				/>
+			</div>
 		</div>
 	);
 };
