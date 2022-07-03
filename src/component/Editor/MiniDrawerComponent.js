@@ -1,7 +1,106 @@
 import * as React from 'react';
-
+import Grid from '@mui/material/Grid';
+import makeStyles from '@mui/styles/makeStyles';
+const useStyles = makeStyles({
+	navBtns: {
+		cursor: 'pointer',
+		paddingTop: '3px',
+		transition: 'all 300ms ease-in-out 0s',
+		textTransform: 'uppercase',
+		opacity: '0.6',
+	},
+	activeNavBtns: {
+		color: 'white',
+		cursor: 'pointer',
+		paddingTop: '3px',
+		transition: 'all 300ms ease-in-out 0s',
+		textTransform: 'uppercase',
+		opacity: '1',
+		borderTop: '2px solid #5a4cdb',
+	},
+});
 export function YourMedia(props) {
-	return <div>Your Media</div>;
+	const classes = useStyles();
+	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const handleCurrent = (ind) => {
+		setCurrentIndex(ind);
+	};
+	return (
+		<div
+			style={{ display: 'flex', flexDirection: 'column', padding: '15px 5px' }}
+		>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-evenly',
+					fontSize: '12px',
+					color: 'grey',
+					fontWeight: '500',
+					margin: '0 0 15px',
+					transition: 'all 500ms ease-in-out 0s',
+				}}
+			>
+				<p
+					className={
+						currentIndex === 0 ? classes.activeNavBtns : classes.navBtns
+					}
+					onClick={handleCurrent.bind(this, 0)}
+				>
+					ALL
+				</p>
+				<p
+					className={
+						currentIndex === 1 ? classes.activeNavBtns : classes.navBtns
+					}
+					onClick={handleCurrent.bind(this, 1)}
+				>
+					VIDEO
+				</p>
+				<p
+					className={
+						currentIndex === 2 ? classes.activeNavBtns : classes.navBtns
+					}
+					onClick={handleCurrent.bind(this, 2)}
+				>
+					AUDIO
+				</p>
+				<p
+					className={
+						currentIndex === 3 ? classes.activeNavBtns : classes.navBtns
+					}
+					onClick={handleCurrent.bind(this, 3)}
+				>
+					IMAGE
+				</p>
+			</div>
+			<Grid sx={{ flexGrow: 1 }} container spacing={2}>
+				<Grid item xs={12}>
+					<Grid container justifyContent="center" spacing={2}>
+						{[0, 1, 2, 3, 4, 5, 6, 7].map((value) => (
+							<Grid key={value} item>
+								<img
+									src="./images/Rectangle.png"
+									alt="img"
+									style={{ width: '130px' }}
+								/>
+								<p
+									style={{
+										margin: 0,
+										fontSize: '12px',
+										color: 'grey',
+										opacity: '0.5',
+									}}
+								>
+									Description All
+								</p>
+							</Grid>
+						))}
+					</Grid>
+				</Grid>
+			</Grid>
+		</div>
+	);
 }
 export function RecordAndCreate(props) {
 	return <div>Record And Create</div>;

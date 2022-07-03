@@ -46,7 +46,6 @@ function TransitionBottom(props) {
 					transition: 'width linear 0.5s',
 					display: 'flex',
 				}}
-				// id="drawer-component"
 			>
 				aldfjaldsf
 			</div>
@@ -56,7 +55,7 @@ function TransitionBottom(props) {
 
 function App() {
 	const [isDrawerOpen, setIsOpenDrawer] = React.useState(true);
-	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(false);
+	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(true);
 	const [transitionLeft, setTransitionLeft] = React.useState(undefined);
 	const [transitionBottom, setTransitionBottom] = React.useState(undefined);
 
@@ -82,6 +81,9 @@ function App() {
 		setTransitionBottom(() => Transition);
 		setIsBottomDrawerOpen(true);
 	};
+	React.useEffect(() => {
+		setTransitionBottom(() => TransitionBottom);
+	}, []);
 
 	// !
 	const [activeIndex, setActiveIndex] = React.useState(0);
@@ -182,13 +184,11 @@ function App() {
 							transition: 'all linear 0.5s',
 						}}
 					>
-						alksdfj
+						<p onClick={handleClickBottom(TransitionBottom)}>Open btm</p>
 					</div>
 					<Snackbar
 						open={isBottomDrawerOpen}
-						// onClose={handleCloseDrawer}
 						TransitionComponent={transitionBottom}
-						// message="I love snacks"
 						key={transitionBottom ? transitionBottom.name : ''}
 						style={{
 							position: 'absolute',
@@ -196,11 +196,9 @@ function App() {
 							left: `0`,
 							right: '0',
 						}}
-						id="drawer-component"
 					></Snackbar>
 				</div>
 			</div>
-			{/* <header className="App-header">lfajsdflk</header> */}
 		</div>
 	);
 }

@@ -1,16 +1,7 @@
 import * as React from 'react';
 import Slide from '@mui/material/Slide';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import dimensions from './editorDimensionsConstants';
-const useStyles = makeStyles({
-	mini: {
-		width: `${dimensions.drawerComponentWidth}px`,
-		height: '100vh',
-		background: '#212425',
-		borderRight: '2px solid grey',
-		color: 'white',
-	},
-});
 
 export function TransitionLeft(props) {
 	return (
