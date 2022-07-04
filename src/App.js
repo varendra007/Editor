@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import { Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Slide from '@mui/material/Slide';
 import './App.css';
 import MiniDrawer, {
@@ -18,11 +18,30 @@ import {
 	Text,
 	YourMedia,
 } from './component/Editor/MiniDrawerComponent';
+import ReactPlayer from 'react-player';
 
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
 const bottomDrawerHeight = 350;
 let leftDrawerOpen = false;
+
+const useStyles = makeStyles({
+	bottomActionBtns: {
+		background: 'rgba(28,28,40,0.8)',
+		borderRadius: '2px',
+		cursor: 'pointer',
+		margin: '0 3px',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: '30px',
+		width: '40px',
+		transition: 'all 200ms ease-in-out 0s',
+		'&:hover': {
+			background: 'rgba(28,28,40,1)',
+		},
+	},
+});
 
 function TransitionBottom(props) {
 	return (
@@ -53,6 +72,15 @@ function TransitionBottom(props) {
 	);
 }
 
+const BottomActionsBtn = ({ imgSrc, buttonName, onClick }) => {
+	const classes = useStyles();
+	return (
+		<div className={classes.bottomActionBtns} onClick={onClick}>
+			<img src={imgSrc} alt={buttonName} />
+		</div>
+	);
+};
+
 function App() {
 	const [isDrawerOpen, setIsOpenDrawer] = React.useState(true);
 	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(true);
@@ -77,9 +105,12 @@ function App() {
 		}
 		setActiveIndex(curInd);
 	};
-	const handleClickBottom = (Transition) => () => {
+	const handleClickBottomDrawer = (Transition) => () => {
 		setTransitionBottom(() => Transition);
 		setIsBottomDrawerOpen(true);
+	};
+	const handleCloseBottomDrawer = () => {
+		setIsBottomDrawerOpen(false);
 	};
 	React.useEffect(() => {
 		setTransitionBottom(() => TransitionBottom);
@@ -88,6 +119,20 @@ function App() {
 	// !
 	const [activeIndex, setActiveIndex] = React.useState(0);
 
+	// ! Dimensions of video
+	const [videoDimensions, setVideoDimensions] = React.useState({
+		height: 0,
+		width: 0,
+	});
+	React.useEffect(() => {
+		setVideoDimensions(() => {
+			let height = document.getElementById('video-container').style.height;
+			return {
+				height,
+				width: document.getElementById('react-player').style.width,
+			};
+		});
+	}, [isDrawerOpen, isBottomDrawerOpen]);
 	return (
 		<div className="App">
 			<div
@@ -167,6 +212,11 @@ function App() {
 						height: '100vh',
 						maxHeight: '100vh',
 						overflow: 'hidden',
+						maxWidth: `${
+							isDrawerOpen
+								? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
+								: window.innerWidth - miniDrawerWidth
+						}px`,
 					}}
 				>
 					<div
@@ -180,11 +230,122 @@ function App() {
 							}px`,
 							display: 'flex',
 							flexDirection: 'column',
-							justifyContent: 'flex-end',
+							justifyContent: 'space-between',
+							alignItems: 'center',
 							transition: 'all linear 0.5s',
 						}}
 					>
-						<p onClick={handleClickBottom(TransitionBottom)}>Open btm</p>
+						{/* VIDEO container HIGHLIGHT */}
+						<div
+							style={{
+								background: 'red',
+								// width: '500px',
+								height: '50vh',
+								maxHheight: `${
+									isBottomDrawerOpen
+										? window.innerHeight - bottomDrawerHeight - 50
+										: window.innerHeight - 50
+								}px`,
+								maxWidth: `${
+									isDrawerOpen
+										? window.innerWidth -
+										  (drawerComponentWidth + miniDrawerWidth + 40)
+										: window.innerWidth - miniDrawerWidth - 40
+								}px`,
+								overflow: 'hidden',
+								// width: `${videoDimensions.width}px`,
+							}}
+							id="video-container"
+						>
+							{/* <div id="react-player"> */}
+							<ReactPlayer
+								url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+								// width={videoDimensions.width}
+								// height={videoDimensions.height}
+								id="react-player"
+								style={{ width: '100%', height: '100%' }}
+							/>
+							{/* </div> */}
+							{/* VIDEO Action container HIGHLIGHT */}
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									justifyContent: 'center',
+									alignItems: 'center',
+									width: '100%',
+								}}
+							>
+								<div style={{ position: 'absolute', right: '0', bottom: '10' }}>
+									a
+								</div>
+							</div>
+						</div>
+						{/* Footer Action container HIGHLIGHT */}
+						<div
+							style={{
+								background: 'black',
+								border: '2px solid grey',
+								width: 'inherit',
+								display: 'flex',
+								height: '40px',
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'space-between',
+								// transition: 'all linear 0.5s',
+							}}
+						>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									marginLeft: '20px	',
+								}}
+							>
+								<BottomActionsBtn
+									imgSrc={'./images/undo.svg'}
+									buttonName="Undo"
+								/>
+								<BottomActionsBtn
+									imgSrc={'./images/redo.svg'}
+									buttonName="Redo"
+								/>
+								<BottomActionsBtn
+									imgSrc={'./images/cut.svg'}
+									buttonName="Split"
+								/>
+								<BottomActionsBtn
+									imgSrc={'./images/delete.svg'}
+									buttonName="Delete"
+								/>
+								<BottomActionsBtn
+									imgSrc={'./images/copy.svg'}
+									buttonName="Copy"
+								/>
+							</div>
+							<div style={{ fontFamily: 'monospace', fontSize: '15px' }}>
+								00:00:00/00:00:00
+							</div>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									marginRight: '20px',
+								}}
+							>
+								<BottomActionsBtn
+									imgSrc={'./images/plus.svg'}
+									buttonName="Open"
+									onClick={handleClickBottomDrawer(TransitionBottom)}
+								/>
+								<BottomActionsBtn
+									imgSrc={'./images/minus.svg'}
+									buttonName="Close"
+									onClick={handleCloseBottomDrawer}
+								/>
+							</div>
+						</div>
 					</div>
 					<Snackbar
 						open={isBottomDrawerOpen}
