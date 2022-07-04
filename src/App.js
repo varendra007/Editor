@@ -20,6 +20,7 @@ import {
 } from './component/Editor/MiniDrawerComponent';
 import ReactPlayer from 'react-player';
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
+import screenfull from 'screenfull';
 
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
@@ -167,7 +168,29 @@ function App() {
 		});
 	}, [isDrawerOpen, isBottomDrawerOpen]);
 
-	// ! Video controles functionalities started from here
+	// !VIDEO Video controles functionalities started from here
+	const [isPlaying, setIsPlaying] = React.useState(false);
+	const [isFullScreen, setIsFullScreen] = React.useState(false);
+	const playerRef = React.useRef(null);
+	const playerContainerRef = React.useRef(null);
+	const handleFastForward = () => {
+		playerRef.current.seekTo(playerRef.current.getCurrentTime() + 5);
+		// console.log(playerRef.current.getcurrentTime());
+		console.log('click');
+	};
+
+	const handleRewind = () => {
+		playerRef.current.seekTo(playerRef.current.getCurrentTime() - 5);
+		// console.log(playerRef.current.getcurrentTime());
+		console.log('click');
+	};
+	const handlePlay = () => {
+		setIsPlaying(!isPlaying);
+	};
+	const handleToggleFullScreen = () => {
+		screenfull.toggle(playerContainerRef.current);
+		setIsFullScreen(!isFullScreen);
+	};
 	return (
 		<div className="App">
 			<div
@@ -274,8 +297,9 @@ function App() {
 						<div
 							style={{
 								background: '',
-								// width: '500px',
-								height: '50vh',
+								// width: '640px',
+								// height: isFullScreen ? '100vh' : '400px',
+								height: '100%',
 								maxHheight: `${
 									isBottomDrawerOpen
 										? window.innerHeight - bottomDrawerHeight - 50
@@ -289,17 +313,42 @@ function App() {
 								}px`,
 								overflow: 'hidden',
 								// width: `${videoDimensions.width}px`,
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+								justifyContent: 'center',
 							}}
 							id="video-container"
 						>
 							{/* <div id="react-player"> */}
-							<ReactPlayer
-								url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-								// width={videoDimensions.width}
-								// height={videoDimensions.height}
-								id="react-player"
-								style={{ width: '100%', height: '100%' }}
-							/>
+							<div
+								ref={playerContainerRef}
+								style={{
+									width: '640px',
+									height: '400px',
+								}}
+							>
+								<ReactPlayer
+									ref={playerRef}
+									playing={isPlaying}
+									controls={false}
+									light={false}
+									url="https://youtu.be/Qo8ciQ9tw2o"
+									// url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+									id="react-player"
+									// style={{ width: '100%', height: '100%' }}
+									config={{
+										file: {
+											attributes: {
+												crossorigin: 'anonymous',
+											},
+										},
+									}}
+									width="100%"
+									height="100%"
+									// height={isFullScreen ? '100%' : '360px'}
+								/>
+							</div>
 							{/* </div> */}
 							{/* VIDEO Action container HIGHLIGHT */}
 							<div
@@ -327,21 +376,24 @@ function App() {
 									<VideoActionBtn
 										imgSrc="./images/back_5sec_btn.svg"
 										buttonName="rewind"
+										onClick={handleRewind}
 									/>
 									<VideoActionBtn
 										imgSrc="./images/play_btn.svg"
 										buttonName="play"
+										onClick={handlePlay}
 									/>
 									<VideoActionBtn
 										imgSrc="./images/forward_5sec_btn.svg"
 										buttonName="play"
+										onClick={handleFastForward}
 									/>
 									<VideoActionBtn
 										imgSrc="./images/play_next_btn.svg"
 										buttonName="play next"
 									/>
 								</div>
-								<div style={{}}>
+								<div style={{}} onClick={handleToggleFullScreen}>
 									<FullscreenRoundedIcon
 										// color="#b3b3b6"
 										// style={{ opacity: '0.5' }}
