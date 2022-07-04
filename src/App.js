@@ -19,6 +19,7 @@ import {
 	YourMedia,
 } from './component/Editor/MiniDrawerComponent';
 import ReactPlayer from 'react-player';
+import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
@@ -39,6 +40,25 @@ const useStyles = makeStyles({
 		transition: 'all 200ms ease-in-out 0s',
 		'&:hover': {
 			background: 'rgba(28,28,40,1)',
+		},
+	},
+	videoActionBtn: {
+		transform: 'scale(0.9)',
+		transition: 'all 200ms linear 0s',
+		padding: '0 10px',
+		opacity: '0.6',
+		'&:hover': {
+			transform: 'scale(1)',
+			opacity: '1',
+		},
+	},
+	bottomActionBtnImg: {
+		transform: 'scale(0.9)',
+		transition: 'all 200ms linear 0s',
+		opacity: '1',
+		'&:hover': {
+			transform: 'scale(1)',
+			opacity: '1',
 		},
 	},
 });
@@ -81,7 +101,20 @@ const BottomActionsBtn = ({ imgSrc, buttonName, onClick }) => {
 	);
 };
 
+const VideoActionBtn = ({ imgSrc, onClick, buttonName }) => {
+	const classes = useStyles();
+	return (
+		<img
+			src={imgSrc}
+			alt={buttonName}
+			className={classes.videoActionBtn}
+			onClick={onClick}
+		/>
+	);
+};
+
 function App() {
+	const classes = useStyles();
 	const [isDrawerOpen, setIsOpenDrawer] = React.useState(true);
 	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(true);
 	const [transitionLeft, setTransitionLeft] = React.useState(undefined);
@@ -133,6 +166,8 @@ function App() {
 			};
 		});
 	}, [isDrawerOpen, isBottomDrawerOpen]);
+
+	// ! Video controles functionalities started from here
 	return (
 		<div className="App">
 			<div
@@ -238,7 +273,7 @@ function App() {
 						{/* VIDEO container HIGHLIGHT */}
 						<div
 							style={{
-								background: 'red',
+								background: '',
 								// width: '500px',
 								height: '50vh',
 								maxHheight: `${
@@ -271,13 +306,47 @@ function App() {
 								style={{
 									display: 'flex',
 									flexDirection: 'row',
-									justifyContent: 'center',
+									justifyContent: 'space-between',
 									alignItems: 'center',
 									width: '100%',
 								}}
 							>
-								<div style={{ position: 'absolute', right: '0', bottom: '10' }}>
-									a
+								<div></div>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										marginTop: '5px',
+									}}
+								>
+									<VideoActionBtn
+										imgSrc="./images/play_prev_btn.svg"
+										buttonName="play prev"
+									/>
+									<VideoActionBtn
+										imgSrc="./images/back_5sec_btn.svg"
+										buttonName="rewind"
+									/>
+									<VideoActionBtn
+										imgSrc="./images/play_btn.svg"
+										buttonName="play"
+									/>
+									<VideoActionBtn
+										imgSrc="./images/forward_5sec_btn.svg"
+										buttonName="play"
+									/>
+									<VideoActionBtn
+										imgSrc="./images/play_next_btn.svg"
+										buttonName="play next"
+									/>
+								</div>
+								<div style={{}}>
+									<FullscreenRoundedIcon
+										// color="#b3b3b6"
+										// style={{ opacity: '0.5' }}
+										className={classes.videoActionBtn}
+									/>
 								</div>
 							</div>
 						</div>
@@ -323,7 +392,16 @@ function App() {
 									buttonName="Copy"
 								/>
 							</div>
-							<div style={{ fontFamily: 'monospace', fontSize: '15px' }}>
+							<div
+								style={{
+									fontFamily: 'monospace',
+									fontSize: '15px',
+									width: '320px',
+									// background: 'red',
+									display: 'flex',
+									justifyContent: 'flex-start',
+								}}
+							>
 								00:00:00/00:00:00
 							</div>
 							<div
