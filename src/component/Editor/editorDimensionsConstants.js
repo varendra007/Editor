@@ -2,5 +2,5 @@
 export default {
 	miniDrawerWidth: 60,
 	drawerComponentWidth: 300,
-	bottomDrawerHeight: 350,
+	bottomDrawerHeight: 300,
 };

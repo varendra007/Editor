@@ -20,11 +20,12 @@ import {
 } from './component/Editor/MiniDrawerComponent';
 import ReactPlayer from 'react-player';
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import screenfull from 'screenfull';
 
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
-const bottomDrawerHeight = 350;
+const bottomDrawerHeight = 300;
 let leftDrawerOpen = false;
 
 const useStyles = makeStyles({
@@ -60,6 +61,26 @@ const useStyles = makeStyles({
 		'&:hover': {
 			transform: 'scale(1)',
 			opacity: '1',
+		},
+	},
+	exportBtn: {
+		background: 'blueviolet',
+		width: '120px',
+		height: '50px',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		margin: '10px 40px',
+		borderRadius: '30px',
+		cursor: 'pointer',
+		transform: 'scale(0.9)',
+		transition: 'all 200ms linear 0s',
+		fontSize: '18px',
+		paddingLeft: '10px',
+		fontFamily: 'sans-serif',
+		'&:hover': {
+			transform: 'scale(1)',
+			opacity: '0.8',
 		},
 	},
 });
@@ -277,6 +298,20 @@ function App() {
 						}px`,
 					}}
 				>
+					<div
+						style={{
+							position: 'absolute',
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'flex-end',
+							width: '100%',
+						}}
+					>
+						<div className={classes.exportBtn}>
+							Export
+							<ArrowDropDownRoundedIcon fontSize="large" />
+						</div>
+					</div>
 					<div
 						style={{
 							background: '#16161e',
