@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import makeStyles from '@mui/styles/makeStyles';
+import DropzoneComponent from '../Dropzone';
 const useStyles = makeStyles({
 	navBtns: {
 		cursor: 'pointer',
@@ -103,7 +104,11 @@ export function YourMedia(props) {
 	);
 }
 export function RecordAndCreate(props) {
-	return <div>Record And Create</div>;
+	return (
+		<div style={{ width: '100%', height: '100%' }}>
+			<DropzoneComponent style={{ width: '100%', height: '100%' }} />
+		</div>
+	);
 }
 export function Templates(props) {
 	return <div>Templates</div>;
