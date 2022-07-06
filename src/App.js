@@ -2,7 +2,6 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { makeStyles } from '@mui/styles';
-import Slide from '@mui/material/Slide';
 import './App.css';
 import MiniDrawer, { TransitionLeft } from './component/Editor/MiniDrawer';
 import editorDimensionsConstants from './component/Editor/editorDimensionsConstants';
@@ -16,42 +15,14 @@ import {
 	YourMedia,
 } from './component/Editor/MiniDrawerComponent';
 import ReactPlayer from 'react-player';
-import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import screenfull from 'screenfull';
 import BottomDrawer from './component/Editor/BottomDrawer';
 import { TransitionBottom } from './component/Editor/BottomDrawer';
-import { UnfoldLessOutlined, UnfoldMoreOutlined } from '@mui/icons-material';
+import BottomDrawerActionContainer from './component/Editor/BottomDrawerActionContainer';
+import VideoActionContainer from './component/Editor/VideoActionContainer';
 
 const useStyles = makeStyles({
-	bottomActionBtns: {
-		background: 'rgba(28,28,40,0.8)',
-		borderRadius: '2px',
-		cursor: 'pointer',
-		margin: '0 3px',
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: '30px',
-		width: '40px',
-		transition: 'all 200ms linear 0s',
-		transform: 'scale(0.9)',
-		'&:hover': {
-			background: 'rgba(28,28,40,1)',
-			transform: 'scale(1)',
-		},
-	},
-	videoActionBtn: {
-		transform: 'scale(0.9)',
-		transition: 'all 200ms linear 0s',
-		padding: '0 10px',
-		opacity: '0.6',
-		cursor: 'pointer',
-		'&:hover': {
-			transform: 'scale(1)',
-			opacity: '1',
-		},
-	},
 	bottomActionBtnImg: {
 		transform: 'scale(0.9)',
 		transition: 'all 200ms linear 0s',
@@ -82,26 +53,6 @@ const useStyles = makeStyles({
 		},
 	},
 });
-const BottomActionsBtn = ({ imgSrc, buttonName, onClick }) => {
-	const classes = useStyles();
-	return (
-		<div className={classes.bottomActionBtns} onClick={onClick}>
-			<img src={imgSrc} alt={buttonName} />
-		</div>
-	);
-};
-
-const VideoActionBtn = ({ imgSrc, onClick, buttonName }) => {
-	const classes = useStyles();
-	return (
-		<img
-			src={imgSrc}
-			alt={buttonName}
-			className={classes.videoActionBtn}
-			onClick={onClick}
-		/>
-	);
-};
 
 function App() {
 	const classes = useStyles();
@@ -114,17 +65,14 @@ function App() {
 		if (!isLeftDrawerOpen) {
 			setTransitionLeft(() => Transition);
 			setIsLeftDrawerOpen(true);
-			// leftDrawerOpen = true;
 		} else {
 			setIsLeftDrawerOpen(false);
-			// leftDrawerOpen = false;
 		}
 	};
 	const handleLeftNav = (Transition, curInd) => () => {
 		if (!isLeftDrawerOpen) {
 			setTransitionLeft(() => Transition);
 			setIsLeftDrawerOpen(true);
-			// leftDrawerOpen = true;
 		}
 		setActiveIndex(curInd);
 	};
@@ -142,21 +90,6 @@ function App() {
 	// !
 	const [activeIndex, setActiveIndex] = React.useState(0);
 
-	// ! Dimensions of video
-	const [videoDimensions, setVideoDimensions] = React.useState({
-		height: 0,
-		width: 0,
-	});
-	React.useEffect(() => {
-		setVideoDimensions(() => {
-			let height = document.getElementById('video-container').style.height;
-			return {
-				height,
-				width: document.getElementById('react-player').style.width,
-			};
-		});
-	}, [isLeftDrawerOpen, isBottomDrawerOpen]);
-
 	// !VIDEO Video controles functionalities started from here
 	const [isPlaying, setIsPlaying] = React.useState(false);
 	const [isFullScreen, setIsFullScreen] = React.useState(false);
@@ -164,13 +97,11 @@ function App() {
 	const playerContainerRef = React.useRef(null);
 	const handleFastForward = () => {
 		playerRef.current.seekTo(playerRef.current.getCurrentTime() + 5);
-		// console.log(playerRef.current.getcurrentTime());
 		console.log('click');
 	};
 
 	const handleRewind = () => {
 		playerRef.current.seekTo(playerRef.current.getCurrentTime() - 5);
-		// console.log(playerRef.current.getcurrentTime());
 		console.log('click');
 	};
 	const handlePlay = () => {
@@ -182,29 +113,9 @@ function App() {
 	};
 
 	const [progress, setProgress] = React.useState(null);
-	const [progressTime, setProgressTime] = React.useState('00:00:00');
-	React.useEffect(() => {
-		// let time = 653.804263;
-		// let r = Math.round((time + Number.EPSILON) * 100) / 100;
-		// console.log(r);
-		// let min = parseInt(time / 60);
-		// let sec = parseInt(time - min * 60);
-		// let miliSec = time.toString().split('.')[1];
-		// console.log('min', min);
-		// console.log('sec', sec);
-		// console.log(miliSec);
-		console.log(progressTime);
-	}, [progressTime]);
 
 	const handleProgress = (changedState) => {
-		// console.log(progress);
 		setProgress(() => changedState);
-		// console.log(changedState);
-		// let time = changedState.playedSeconds;
-		// let min = parseInt(time / 60);
-		// let sec = parseInt(time - min * 60);
-		// let r = Math.round((time + Number.EPSILON) * 100) / 100;
-		// let milisec = r.toString().split('.')[1];
 	};
 	const format = (seconds) => {
 		if (isNaN(seconds)) {
@@ -242,7 +153,6 @@ function App() {
 		let pos = parseInt((currentTime / duration) * editorWidth);
 		if (currentTime === duration) pos = pos - 3;
 		setProgressBarPosition(pos);
-		// console.log(editorWidth);
 	}, [duration, currentTime, editorWidth]);
 
 	return (
@@ -273,9 +183,7 @@ function App() {
 
 					<Snackbar
 						open={isLeftDrawerOpen}
-						// onClose={handleCloseDrawer}
 						TransitionComponent={transitionLeft}
-						// message="I love snacks"
 						key={transitionLeft ? transitionLeft.name : ''}
 						style={{
 							position: 'absolute',
@@ -293,7 +201,6 @@ function App() {
 								color: 'white',
 								overflow: 'auto',
 								overflowX: 'hidden',
-								// scrollbarWidth: 'thin',
 							}}
 						>
 							{activeIndex === 0 && <YourMedia />}
@@ -377,8 +284,6 @@ function App() {
 						<div
 							style={{
 								background: '',
-								// width: '640px',
-								// height: isFullScreen ? '100vh' : '400px',
 								height: '100%',
 								maxHheight: `${
 									isBottomDrawerOpen
@@ -398,7 +303,6 @@ function App() {
 										  40
 								}px`,
 								overflow: 'hidden',
-								// width: `${videoDimensions.width}px`,
 								display: 'flex',
 								flexDirection: 'column',
 								alignItems: 'center',
@@ -406,7 +310,6 @@ function App() {
 							}}
 							id="video-container"
 						>
-							{/* <div id="react-player"> */}
 							<div
 								ref={playerContainerRef}
 								style={{
@@ -426,7 +329,6 @@ function App() {
 									// url="https://youtu.be/Qo8ciQ9tw2o"
 									url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
 									id="react-player"
-									// style={{ width: '100%', height: '100%' }}
 									config={{
 										file: {
 											attributes: {
@@ -436,154 +338,25 @@ function App() {
 									}}
 									width="100%"
 									height="100%"
-									// height={isFullScreen ? '100%' : '360px'}
 								/>
 							</div>
-							{/* </div> */}
 							{/* VIDEO Action container HIGHLIGHT */}
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-									width: '100%',
-								}}
-							>
-								<div></div>
-								<div
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										marginTop: '5px',
-									}}
-								>
-									<VideoActionBtn
-										imgSrc="./images/play_prev_btn.svg"
-										buttonName="play prev"
-									/>
-									<VideoActionBtn
-										imgSrc="./images/back_5sec_btn.svg"
-										buttonName="rewind"
-										onClick={handleRewind}
-									/>
-									<VideoActionBtn
-										imgSrc="./images/play_btn.svg"
-										buttonName="play"
-										onClick={handlePlay}
-									/>
-									<VideoActionBtn
-										imgSrc="./images/forward_5sec_btn.svg"
-										buttonName="play"
-										onClick={handleFastForward}
-									/>
-									<VideoActionBtn
-										imgSrc="./images/play_next_btn.svg"
-										buttonName="play next"
-									/>
-								</div>
-								<div style={{}} onClick={handleToggleFullScreen}>
-									<FullscreenRoundedIcon
-										// color="#b3b3b6"
-										// style={{ opacity: '0.5' }}
-										className={classes.videoActionBtn}
-									/>
-								</div>
-							</div>
+							<VideoActionContainer
+								handleFastForward={handleFastForward}
+								handlePlay={handlePlay}
+								handleRewind={handleRewind}
+								handleToggleFullScreen={handleToggleFullScreen}
+							/>
 						</div>
 						{/* Footer Action container HIGHLIGHT */}
-						<div
-							style={{
-								background: 'black',
-								border: '2px solid grey',
-								width: 'inherit',
-								display: 'flex',
-								height: '40px',
-								flexDirection: 'row',
-								alignItems: 'center',
-								justifyContent: 'space-between',
-								// transition: 'all linear 0.5s',
-							}}
-						>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-									marginLeft: '20px	',
-								}}
-							>
-								<BottomActionsBtn
-									imgSrc={'./images/undo.svg'}
-									buttonName="Undo"
-								/>
-								<BottomActionsBtn
-									imgSrc={'./images/redo.svg'}
-									buttonName="Redo"
-								/>
-								{/* <BottomActionsBtn
-									imgSrc={'./images/cut.svg'}
-									buttonName="Split"
-								/>
-								<BottomActionsBtn
-									imgSrc={'./images/delete.svg'}
-									buttonName="Delete"
-								/> */}
-								<BottomActionsBtn
-									imgSrc={'./images/copy.svg'}
-									buttonName="Copy"
-								/>
-							</div>
-							<div
-								style={{
-									fontFamily: 'monospace',
-									fontSize: '15px',
-									width: '320px',
-									// background: 'red',
-									display: 'flex',
-									justifyContent: 'flex-start',
-								}}
-							>
-								{/* 00:00:00/00:00:00 */}
-								{elapsedTime.toString().split(':')[0].length === 1
-									? `0${elapsedTime}`
-									: elapsedTime}{' '}
-								/ {totalDuration}
-							</div>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									marginRight: '20px',
-								}}
-							>
-								<BottomActionsBtn
-									imgSrc={'./images/plus.svg'}
-									buttonName="Open"
-									// onClick={handleClickBottomDrawer(TransitionBottom)}
-								/>
-								<BottomActionsBtn
-									imgSrc={'./images/minus.svg'}
-									buttonName="Close"
-									// onClick={handleCloseBottomDrawer}
-								/>
-								<div
-									className={classes.bottomActionBtns}
-									onClick={
-										isBottomDrawerOpen
-											? handleCloseBottomDrawer
-											: handleClickBottomDrawer(TransitionBottom)
-									}
-								>
-									{isBottomDrawerOpen ? (
-										<UnfoldLessOutlined />
-									) : (
-										<UnfoldMoreOutlined />
-									)}
-								</div>
-							</div>
-						</div>
+						<BottomDrawerActionContainer
+							elapsedTime={elapsedTime}
+							totalDuration={totalDuration}
+							isBottomDrawerOpen={isBottomDrawerOpen}
+							TransitionBottom={TransitionBottom}
+							handleClickBottomDrawer={handleClickBottomDrawer}
+							handleCloseBottomDrawer={handleCloseBottomDrawer}
+						/>
 					</div>
 					<Snackbar
 						open={isBottomDrawerOpen}
