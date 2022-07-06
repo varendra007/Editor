@@ -1,12 +1,33 @@
 import * as React from 'react';
+import { makeStyles } from '@mui/styles';
 import Slide from '@mui/material/Slide';
-// import { makeStyles } from '@mui/styles';
 import dimensions from './editorDimensionsConstants';
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
 import CameraOutlinedIcon from '@mui/icons-material/CameraOutlined';
 import MusicVideoOutlinedIcon from '@mui/icons-material/MusicVideoOutlined';
 import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
 import { TextFieldsOutlined, WindowOutlined } from '@mui/icons-material';
+
+const useStyles = makeStyles({
+	drawerButton: {
+		color: 'grey',
+		fontSize: '13px',
+		fontWeight: '500',
+		textAlign: 'center',
+		margin: '5px 0',
+	},
+	miniDrawerContainer: {
+		background: '#16161e',
+		position: 'absolute',
+		width: `${dimensions.miniDrawerWidth}px`,
+		height: '100vh',
+		left: 0,
+		zIndex: '+10000000000',
+		overflow: 'auto',
+		borderRight: '1px solid grey',
+	},
+});
+
 export function TransitionLeft(props) {
 	return (
 		<Slide
@@ -19,6 +40,7 @@ export function TransitionLeft(props) {
 }
 
 const DrawerButtons = (props) => {
+	const classes = useStyles();
 	return (
 		<div
 			style={{
@@ -30,36 +52,15 @@ const DrawerButtons = (props) => {
 		>
 			{props.icon}
 
-			<p
-				style={{
-					color: 'grey',
-					fontSize: '13px',
-					fontWeight: '500',
-					textAlign: 'center',
-					margin: '5px 0',
-				}}
-			>
-				{props.title}
-			</p>
+			<p className={classes.drawerButton}>{props.title}</p>
 		</div>
 	);
 };
 
 const MiniDrawer = (props) => {
+	const classes = useStyles();
 	return (
-		<div
-			style={{
-				background: '#16161e',
-				position: 'absolute',
-				width: `${dimensions.miniDrawerWidth}px`,
-				height: '100vh',
-				left: 0,
-				zIndex: '+10000000000',
-				overflow: 'auto',
-				borderRight: '1px solid grey',
-			}}
-			id="mini-drawer"
-		>
+		<div className={classes.miniDrawerContainer} id="mini-drawer">
 			<div style={{ margin: '20px 0 10px' }}>
 				<img
 					src="./images/menu_btn.svg"
@@ -72,13 +73,11 @@ const MiniDrawer = (props) => {
 				title="Create & Upload"
 				active={props.currentIndex === 1}
 				icon={<CameraOutlinedIcon style={{ color: '#b3b3b6' }} />}
-				// imgSrc="./images/your_media.svg"
 				onClick={props.handleRecordAndCreate}
 			/>
 			<DrawerButtons
 				title="Media"
 				active={props.currentIndex === 0}
-				// imgSrc="./images/your_media.svg"
 				icon={<FolderOpenOutlinedIcon style={{ color: '#b3b3b6' }} />}
 				onClick={props.handleYourMedia}
 				size="25px"
@@ -96,12 +95,6 @@ const MiniDrawer = (props) => {
 				icon={<ImageSearchOutlinedIcon style={{ color: '#b3b3b6' }} />}
 				onClick={props.handleStockImages}
 			/>
-			{/* <DrawerButtons
-				title="Stock Videos"
-				active={props.currentIndex === 5}
-				imgSrc="./images/your_media.svg"
-				onClick={props.handleStockVideos}
-			/> */}
 			<DrawerButtons
 				title="Text"
 				active={props.currentIndex === 6}
@@ -114,22 +107,6 @@ const MiniDrawer = (props) => {
 				icon={<WindowOutlined style={{ color: '#b3b3b6' }} />}
 				onClick={props.handleTemplates}
 			/>
-			{/* <div style={{ margin: '20px 0 10px' }}>
-				<img
-					src="./images/menu_btn.svg"
-					alt="menu"
-					style={{ cursor: 'pointer' }}
-					onClick={props.handleDoc}
-				/>
-			</div>
-			<div style={{ margin: '20px 0 10px' }}>
-				<img
-					src="./images/menu_btn.svg"
-					alt="menu"
-					style={{ cursor: 'pointer' }}
-					onClick={props.handleFile}
-				/>
-			</div> */}
 		</div>
 	);
 };

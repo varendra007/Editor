@@ -20,50 +20,61 @@ const useStyles = makeStyles({
 		opacity: '1',
 		borderTop: '2px solid #5a4cdb',
 	},
+	searchForm: {
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'row',
+		margin: '20px 0',
+		height: '35px',
+		justifyContent: 'space-evenly',
+	},
+	searchInput: {
+		width: '60%',
+		borderRadius: '6px',
+		outline: 'none',
+		paddingLeft: '5px',
+		paddingRight: '5px',
+		background: 'white',
+	},
+	searchFilterBtn: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		cursor: 'pointer',
+		background: 'white',
+		border: '1px solid black',
+		borderRadius: '2px',
+		width: '13%',
+	},
+	mediaTopRowNavigator: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		fontSize: '12px',
+		color: 'grey',
+		fontWeight: '500',
+		margin: '0 0 15px',
+		transition: 'all 500ms ease-in-out 0s',
+	},
+	imgDescription: {
+		margin: 0,
+		fontSize: '12px',
+		color: 'grey',
+		opacity: '0.5',
+	},
 });
 
 const SearchBar = ({ placeholder }) => {
+	const classes = useStyles();
 	return (
 		<div
 			style={{
 				width: editorDimensionsConstants.drawerComponentWidth,
 			}}
 		>
-			<form
-				style={{
-					width: '100%',
-					display: 'flex',
-					flexDirection: 'row',
-					margin: '20px 0',
-					height: '35px',
-					justifyContent: 'space-evenly',
-				}}
-			>
-				<input
-					style={{
-						width: '60%',
-						borderRadius: '6px',
-						outline: 'none',
-						paddingLeft: '5px',
-						paddingRight: '5px',
-						background: 'white',
-					}}
-					placeholder={placeholder}
-					s
-				/>
-				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						cursor: 'pointer',
-						background: 'white',
-						border: '1px solid black',
-						borderRadius: '2px',
-						width: '13%',
-						// position: 'absolute',
-					}}
-				>
+			<form className={classes.searchForm}>
+				<input className={classes.searchInput} placeholder={placeholder} s />
+				<div className={classes.searchFilterBtn}>
 					<img
 						src="./images/filter_btn.svg"
 						alt="filter"
@@ -84,18 +95,7 @@ export function YourMedia(props) {
 		<div
 			style={{ display: 'flex', flexDirection: 'column', padding: '15px 5px' }}
 		>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-evenly',
-					fontSize: '12px',
-					color: 'grey',
-					fontWeight: '500',
-					margin: '0 0 15px',
-					transition: 'all 500ms ease-in-out 0s',
-				}}
-			>
+			<div className={classes.mediaTopRowNavigator}>
 				<p
 					className={
 						currentIndex === 0 ? classes.activeNavBtns : classes.navBtns
@@ -139,16 +139,7 @@ export function YourMedia(props) {
 									alt="img"
 									style={{ width: '130px' }}
 								/>
-								<p
-									style={{
-										margin: 0,
-										fontSize: '12px',
-										color: 'grey',
-										opacity: '0.5',
-									}}
-								>
-									Description All
-								</p>
+								<p className={classes.imgDescription}>Description All</p>
 							</Grid>
 						))}
 					</Grid>
@@ -165,29 +156,21 @@ export function RecordAndCreate(props) {
 	);
 }
 export function Templates(props) {
+	const classes = useStyles();
 	return (
-		<div style={{ overflow: 'auto' }}>
+		<div style={{ overflow: 'auto', scrollbarWidth: '5px' }}>
 			<SearchBar placeholder="Search Templates" />
 			<Grid sx={{ flexGrow: 1 }} container spacing={2}>
 				<Grid item xs={12}>
 					<Grid container justifyContent="center" spacing={2}>
-						{[0, 1, 2, 3, 4, 5, 6, 7].map((value) => (
+						{[0, 1, 2, 3, 4].map((value) => (
 							<Grid key={value} item>
 								<img
 									src="./images/Rectangle.png"
 									alt="img"
 									style={{ width: '230px' }}
 								/>
-								<p
-									style={{
-										margin: 0,
-										fontSize: '12px',
-										color: 'grey',
-										opacity: '0.5',
-									}}
-								>
-									Description All
-								</p>
+								<p className={classes.imgDescription}>Description All</p>
 							</Grid>
 						))}
 					</Grid>
@@ -207,6 +190,7 @@ export function StockVideo(props) {
 	return <div>Stock Video</div>;
 }
 export function StockImages(props) {
+	const classes = useStyles();
 	return (
 		<div>
 			<SearchBar placeholder="Search Images" />
@@ -220,16 +204,7 @@ export function StockImages(props) {
 									alt="img"
 									style={{ width: '130px' }}
 								/>
-								<p
-									style={{
-										margin: 0,
-										fontSize: '12px',
-										color: 'grey',
-										opacity: '0.5',
-									}}
-								>
-									Description All
-								</p>
+								<p className={classes.imgDescription}>Description All</p>
 							</Grid>
 						))}
 					</Grid>
@@ -239,6 +214,7 @@ export function StockImages(props) {
 	);
 }
 export function Text(props) {
+	const classes = useStyles();
 	return (
 		<div>
 			<SearchBar placeholder="Search Text" />
@@ -252,16 +228,7 @@ export function Text(props) {
 									alt="img"
 									style={{ width: '130px' }}
 								/>
-								<p
-									style={{
-										margin: 0,
-										fontSize: '12px',
-										color: 'grey',
-										opacity: '0.5',
-									}}
-								>
-									Description All
-								</p>
+								<p className={classes.imgDescription}>Description All</p>
 							</Grid>
 						))}
 					</Grid>

@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@mui/styles';
 import Dropzone from 'react-dropzone';
-import editorDimensionsConstants from '../Editor/editorDimensionsConstants';
 import { FolderOpenOutlined } from '@mui/icons-material';
 
 const useStyles = makeStyles({
 	dropzone: {
-		// background: 'white',
 		width: `100%`,
 		height: '100%',
 		display: 'flex',
@@ -49,7 +47,6 @@ export default function DropzoneComponent({ style }) {
 							{...getRootProps({
 								className: `${classes.dropzone} ${additionalClass}`,
 							})}
-							// style={style}
 						>
 							<input {...getInputProps()} />
 							<span style={{ fontSize: '50px' }}>

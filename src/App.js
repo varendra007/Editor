@@ -4,10 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { makeStyles } from '@mui/styles';
 import Slide from '@mui/material/Slide';
 import './App.css';
-import MiniDrawer, {
-	TransitionLeft,
-	// TransitionDoc,
-} from './component/Editor/MiniDrawer';
+import MiniDrawer, { TransitionLeft } from './component/Editor/MiniDrawer';
 import editorDimensionsConstants from './component/Editor/editorDimensionsConstants';
 import {
 	MusicAndSFX,
@@ -22,13 +19,9 @@ import ReactPlayer from 'react-player';
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import screenfull from 'screenfull';
-import moment from 'moment';
 import BottomDrawer from './component/Editor/BottomDrawer';
+import { TransitionBottom } from './component/Editor/BottomDrawer';
 import { UnfoldLessOutlined, UnfoldMoreOutlined } from '@mui/icons-material';
-const miniDrawerWidth = 60;
-const drawerComponentWidth = 300;
-const bottomDrawerHeight = 300;
-// let leftDrawerOpen = false;
 
 const useStyles = makeStyles({
 	bottomActionBtns: {
@@ -89,16 +82,6 @@ const useStyles = makeStyles({
 		},
 	},
 });
-function TransitionBottom(props) {
-	return (
-		<Slide
-			{...props}
-			direction="up"
-			style={{ margin: '0' }}
-			timeout={{ enter: 820, exit: 500 }}
-		></Slide>
-	);
-}
 const BottomActionsBtn = ({ imgSrc, buttonName, onClick }) => {
 	const classes = useStyles();
 	return (
@@ -297,7 +280,7 @@ function App() {
 						style={{
 							position: 'absolute',
 							bottom: 0,
-							left: `${miniDrawerWidth}px`,
+							left: `${editorDimensionsConstants.miniDrawerWidth}px`,
 						}}
 						id="drawer-component"
 					>
@@ -309,6 +292,8 @@ function App() {
 								borderRight: '2px solid grey',
 								color: 'white',
 								overflow: 'auto',
+								overflowX: 'hidden',
+								// scrollbarWidth: 'thin',
 							}}
 						>
 							{activeIndex === 0 && <YourMedia />}
@@ -328,24 +313,31 @@ function App() {
 						background: '#16161e',
 						width: `${
 							isLeftDrawerOpen
-								? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
-								: window.innerWidth - miniDrawerWidth
+								? window.innerWidth -
+								  (editorDimensionsConstants.drawerComponentWidth +
+										editorDimensionsConstants.miniDrawerWidth)
+								: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
 						}px`,
 						color: 'white',
 						display: 'flex',
 						flexDirection: 'column',
 						// justifyContent: 'space-between',
 						left: isLeftDrawerOpen
-							? `${miniDrawerWidth + drawerComponentWidth}px`
-							: `${miniDrawerWidth}px`,
+							? `${
+									editorDimensionsConstants.miniDrawerWidth +
+									editorDimensionsConstants.drawerComponentWidth
+							  }px`
+							: `${editorDimensionsConstants.miniDrawerWidth}px`,
 						transition: 'all linear 0.5s',
 						height: '100vh',
 						maxHeight: '100vh',
 						overflow: 'hidden',
 						maxWidth: `${
 							isLeftDrawerOpen
-								? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
-								: window.innerWidth - miniDrawerWidth
+								? window.innerWidth -
+								  (editorDimensionsConstants.drawerComponentWidth +
+										editorDimensionsConstants.miniDrawerWidth)
+								: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
 						}px`,
 					}}
 					id="main-editor"
@@ -370,7 +362,8 @@ function App() {
 							width: 'inherit',
 							height: `${
 								isBottomDrawerOpen
-									? window.innerHeight - bottomDrawerHeight
+									? window.innerHeight -
+									  editorDimensionsConstants.bottomDrawerHeight
 									: window.innerHeight
 							}px`,
 							display: 'flex',
@@ -389,14 +382,20 @@ function App() {
 								height: '100%',
 								maxHheight: `${
 									isBottomDrawerOpen
-										? window.innerHeight - bottomDrawerHeight - 50
+										? window.innerHeight -
+										  editorDimensionsConstants.bottomDrawerHeight -
+										  50
 										: window.innerHeight - 50
 								}px`,
 								maxWidth: `${
 									isLeftDrawerOpen
 										? window.innerWidth -
-										  (drawerComponentWidth + miniDrawerWidth + 40)
-										: window.innerWidth - miniDrawerWidth - 40
+										  (editorDimensionsConstants.drawerComponentWidth +
+												editorDimensionsConstants.miniDrawerWidth +
+												40)
+										: window.innerWidth -
+										  editorDimensionsConstants.miniDrawerWidth -
+										  40
 								}px`,
 								overflow: 'hidden',
 								// width: `${videoDimensions.width}px`,
