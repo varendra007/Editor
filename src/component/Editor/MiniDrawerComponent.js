@@ -55,7 +55,7 @@ export function YourMedia(props) {
 					}
 					onClick={handleCurrent.bind(this, 1)}
 				>
-					VIDEO
+					TEXT
 				</p>
 				<p
 					className={

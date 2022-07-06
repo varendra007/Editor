@@ -22,7 +22,7 @@ import ReactPlayer from 'react-player';
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import screenfull from 'screenfull';
-
+import moment from 'moment';
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
 const bottomDrawerHeight = 300;
@@ -39,9 +39,11 @@ const useStyles = makeStyles({
 		alignItems: 'center',
 		height: '30px',
 		width: '40px',
-		transition: 'all 200ms ease-in-out 0s',
+		transition: 'all 200ms linear 0s',
+		transform: 'scale(0.9)',
 		'&:hover': {
 			background: 'rgba(28,28,40,1)',
+			transform: 'scale(1)',
 		},
 	},
 	videoActionBtn: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles({
 		transition: 'all 200ms linear 0s',
 		padding: '0 10px',
 		opacity: '0.6',
+		cursor: 'pointer',
 		'&:hover': {
 			transform: 'scale(1)',
 			opacity: '1',
@@ -212,6 +215,57 @@ function App() {
 		screenfull.toggle(playerContainerRef.current);
 		setIsFullScreen(!isFullScreen);
 	};
+
+	const [progress, setProgress] = React.useState(null);
+	const [progressTime, setProgressTime] = React.useState('00:00:00');
+	React.useEffect(() => {
+		// let time = 653.804263;
+		// let r = Math.round((time + Number.EPSILON) * 100) / 100;
+		// console.log(r);
+		// let min = parseInt(time / 60);
+		// let sec = parseInt(time - min * 60);
+		// let miliSec = time.toString().split('.')[1];
+		// console.log('min', min);
+		// console.log('sec', sec);
+		// console.log(miliSec);
+		console.log(progressTime);
+	}, [progressTime]);
+
+	const handleProgress = (changedState) => {
+		// console.log(progress);
+		setProgress(() => changedState);
+		// console.log(changedState);
+		// let time = changedState.playedSeconds;
+		// let min = parseInt(time / 60);
+		// let sec = parseInt(time - min * 60);
+		// let r = Math.round((time + Number.EPSILON) * 100) / 100;
+		// let milisec = r.toString().split('.')[1];
+	};
+	const format = (seconds) => {
+		if (isNaN(seconds)) {
+			return `00:00`;
+		}
+		const date = new Date(seconds * 1000);
+		const hh = date.getUTCHours();
+		const mm = date.getUTCMinutes();
+		const ss = date.getUTCSeconds().toString().padStart(2, '0');
+		if (hh) {
+			return `${hh}:${mm.toString().padStart(2, '0')}:${ss}`;
+		}
+		return `${mm}:${ss}`;
+	};
+
+	const currentTime =
+		playerRef && playerRef.current
+			? playerRef.current.getCurrentTime()
+			: '00:00';
+
+	const duration =
+		playerRef && playerRef.current ? playerRef.current.getDuration() : '00:00';
+	const elapsedTime = format(currentTime);
+
+	const totalDuration = format(duration);
+
 	return (
 		<div className="App">
 			<div
@@ -368,6 +422,10 @@ function App() {
 									playing={isPlaying}
 									controls={false}
 									light={false}
+									onProgress={handleProgress}
+									onDuration={(duration) => {
+										console.log(duration);
+									}}
 									url="https://youtu.be/Qo8ciQ9tw2o"
 									// url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
 									id="react-player"
@@ -489,7 +547,11 @@ function App() {
 									justifyContent: 'flex-start',
 								}}
 							>
-								00:00:00/00:00:00
+								{/* 00:00:00/00:00:00 */}
+								{elapsedTime.toString().split(':')[0].length === 1
+									? `0${elapsedTime}`
+									: elapsedTime}{' '}
+								/ {totalDuration}
 							</div>
 							<div
 								style={{
