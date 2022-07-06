@@ -23,10 +23,12 @@ import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import screenfull from 'screenfull';
 import moment from 'moment';
+import BottomDrawer from './component/Editor/BottomDrawer';
+import { UnfoldLessOutlined, UnfoldMoreOutlined } from '@mui/icons-material';
 const miniDrawerWidth = 60;
 const drawerComponentWidth = 300;
 const bottomDrawerHeight = 300;
-let leftDrawerOpen = false;
+// let leftDrawerOpen = false;
 
 const useStyles = makeStyles({
 	bottomActionBtns: {
@@ -87,7 +89,6 @@ const useStyles = makeStyles({
 		},
 	},
 });
-
 function TransitionBottom(props) {
 	return (
 		<Slide
@@ -95,28 +96,9 @@ function TransitionBottom(props) {
 			direction="up"
 			style={{ margin: '0' }}
 			timeout={{ enter: 820, exit: 500 }}
-		>
-			<div
-				style={{
-					width: `${
-						leftDrawerOpen
-							? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
-							: window.innerWidth - miniDrawerWidth
-					}px`,
-					height: `${bottomDrawerHeight}px`,
-					background: '#16161e',
-					borderTop: '2px solid grey',
-					color: 'white',
-					transition: 'width linear 0.5s',
-					display: 'flex',
-				}}
-			>
-				aldfjaldsf
-			</div>
-		</Slide>
+		></Slide>
 	);
 }
-
 const BottomActionsBtn = ({ imgSrc, buttonName, onClick }) => {
 	const classes = useStyles();
 	return (
@@ -140,26 +122,26 @@ const VideoActionBtn = ({ imgSrc, onClick, buttonName }) => {
 
 function App() {
 	const classes = useStyles();
-	const [isDrawerOpen, setIsOpenDrawer] = React.useState(true);
+	const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(true);
 	const [isBottomDrawerOpen, setIsBottomDrawerOpen] = React.useState(true);
 	const [transitionLeft, setTransitionLeft] = React.useState(undefined);
 	const [transitionBottom, setTransitionBottom] = React.useState(undefined);
 
 	const handleClickLeft = (Transition) => () => {
-		if (!isDrawerOpen) {
+		if (!isLeftDrawerOpen) {
 			setTransitionLeft(() => Transition);
-			setIsOpenDrawer(true);
-			leftDrawerOpen = true;
+			setIsLeftDrawerOpen(true);
+			// leftDrawerOpen = true;
 		} else {
-			setIsOpenDrawer(false);
-			leftDrawerOpen = false;
+			setIsLeftDrawerOpen(false);
+			// leftDrawerOpen = false;
 		}
 	};
 	const handleLeftNav = (Transition, curInd) => () => {
-		if (!isDrawerOpen) {
+		if (!isLeftDrawerOpen) {
 			setTransitionLeft(() => Transition);
-			setIsOpenDrawer(true);
-			leftDrawerOpen = true;
+			setIsLeftDrawerOpen(true);
+			// leftDrawerOpen = true;
 		}
 		setActiveIndex(curInd);
 	};
@@ -190,7 +172,7 @@ function App() {
 				width: document.getElementById('react-player').style.width,
 			};
 		});
-	}, [isDrawerOpen, isBottomDrawerOpen]);
+	}, [isLeftDrawerOpen, isBottomDrawerOpen]);
 
 	// !VIDEO Video controles functionalities started from here
 	const [isPlaying, setIsPlaying] = React.useState(false);
@@ -265,6 +247,20 @@ function App() {
 	const elapsedTime = format(currentTime);
 
 	const totalDuration = format(duration);
+	const [editorWidth, setEditorWidth] = React.useState();
+	const [progressBarPosition, setProgressBarPosition] = React.useState(0);
+
+	React.useEffect(() => {
+		setEditorWidth(
+			document.getElementById('main-editor').style.width.split('p')[0] * 1
+		);
+	}, [isLeftDrawerOpen]);
+	React.useEffect(() => {
+		let pos = parseInt((currentTime / duration) * editorWidth);
+		if (currentTime === duration) pos = pos - 3;
+		setProgressBarPosition(pos);
+		// console.log(editorWidth);
+	}, [duration, currentTime, editorWidth]);
 
 	return (
 		<div className="App">
@@ -293,7 +289,7 @@ function App() {
 					{/* DrawerContent */}
 
 					<Snackbar
-						open={isDrawerOpen}
+						open={isLeftDrawerOpen}
 						// onClose={handleCloseDrawer}
 						TransitionComponent={transitionLeft}
 						// message="I love snacks"
@@ -312,6 +308,7 @@ function App() {
 								background: '#212425',
 								borderRight: '2px solid grey',
 								color: 'white',
+								overflow: 'auto',
 							}}
 						>
 							{activeIndex === 0 && <YourMedia />}
@@ -330,7 +327,7 @@ function App() {
 						position: 'absolute',
 						background: '#16161e',
 						width: `${
-							isDrawerOpen
+							isLeftDrawerOpen
 								? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
 								: window.innerWidth - miniDrawerWidth
 						}px`,
@@ -338,7 +335,7 @@ function App() {
 						display: 'flex',
 						flexDirection: 'column',
 						// justifyContent: 'space-between',
-						left: isDrawerOpen
+						left: isLeftDrawerOpen
 							? `${miniDrawerWidth + drawerComponentWidth}px`
 							: `${miniDrawerWidth}px`,
 						transition: 'all linear 0.5s',
@@ -346,11 +343,12 @@ function App() {
 						maxHeight: '100vh',
 						overflow: 'hidden',
 						maxWidth: `${
-							isDrawerOpen
+							isLeftDrawerOpen
 								? window.innerWidth - (drawerComponentWidth + miniDrawerWidth)
 								: window.innerWidth - miniDrawerWidth
 						}px`,
 					}}
+					id="main-editor"
 				>
 					<div
 						style={{
@@ -395,7 +393,7 @@ function App() {
 										: window.innerHeight - 50
 								}px`,
 								maxWidth: `${
-									isDrawerOpen
+									isLeftDrawerOpen
 										? window.innerWidth -
 										  (drawerComponentWidth + miniDrawerWidth + 40)
 										: window.innerWidth - miniDrawerWidth - 40
@@ -426,8 +424,8 @@ function App() {
 									onDuration={(duration) => {
 										console.log(duration);
 									}}
-									url="https://youtu.be/Qo8ciQ9tw2o"
-									// url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+									// url="https://youtu.be/Qo8ciQ9tw2o"
+									url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
 									id="react-player"
 									// style={{ width: '100%', height: '100%' }}
 									config={{
@@ -524,14 +522,14 @@ function App() {
 									imgSrc={'./images/redo.svg'}
 									buttonName="Redo"
 								/>
-								<BottomActionsBtn
+								{/* <BottomActionsBtn
 									imgSrc={'./images/cut.svg'}
 									buttonName="Split"
 								/>
 								<BottomActionsBtn
 									imgSrc={'./images/delete.svg'}
 									buttonName="Delete"
-								/>
+								/> */}
 								<BottomActionsBtn
 									imgSrc={'./images/copy.svg'}
 									buttonName="Copy"
@@ -564,13 +562,27 @@ function App() {
 								<BottomActionsBtn
 									imgSrc={'./images/plus.svg'}
 									buttonName="Open"
-									onClick={handleClickBottomDrawer(TransitionBottom)}
+									// onClick={handleClickBottomDrawer(TransitionBottom)}
 								/>
 								<BottomActionsBtn
 									imgSrc={'./images/minus.svg'}
 									buttonName="Close"
-									onClick={handleCloseBottomDrawer}
+									// onClick={handleCloseBottomDrawer}
 								/>
+								<div
+									className={classes.bottomActionBtns}
+									onClick={
+										isBottomDrawerOpen
+											? handleCloseBottomDrawer
+											: handleClickBottomDrawer(TransitionBottom)
+									}
+								>
+									{isBottomDrawerOpen ? (
+										<UnfoldLessOutlined />
+									) : (
+										<UnfoldMoreOutlined />
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -584,7 +596,29 @@ function App() {
 							left: `0`,
 							right: '0',
 						}}
-					></Snackbar>
+					>
+						<div
+							style={{
+								width: `${
+									isLeftDrawerOpen
+										? window.innerWidth -
+										  (editorDimensionsConstants.drawerComponentWidth +
+												editorDimensionsConstants.miniDrawerWidth)
+										: window.innerWidth -
+										  editorDimensionsConstants.miniDrawerWidth
+								}px`,
+								height: `${editorDimensionsConstants.bottomDrawerHeight}px`,
+								background: '#16161e',
+								borderTop: '2px solid grey',
+								color: 'white',
+								transition: 'width linear 0.5s',
+								display: 'flex',
+								alignItems: 'center',
+							}}
+						>
+							<BottomDrawer progressBarPosition={progressBarPosition} />
+						</div>
+					</Snackbar>
 				</div>
 			</div>
 		</div>

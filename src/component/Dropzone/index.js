@@ -7,8 +7,8 @@ import { FolderOpenOutlined } from '@mui/icons-material';
 const useStyles = makeStyles({
 	dropzone: {
 		// background: 'white',
-		width: `${editorDimensionsConstants.drawerComponentWidth}px`,
-		height: '100vh',
+		width: `100%`,
+		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -53,7 +53,6 @@ export default function DropzoneComponent({ style }) {
 						>
 							<input {...getInputProps()} />
 							<span style={{ fontSize: '50px' }}>
-								{/* {isDragActive ? '📂' : '📁'} */}
 								<FolderOpenOutlined
 									style={{ color: '#b3b3b6', fontSize: '50px' }}
 								/>

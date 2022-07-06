@@ -69,19 +69,19 @@ const MiniDrawer = (props) => {
 				/>
 			</div>
 			<DrawerButtons
-				title="Your Media"
+				title="Create & Upload"
+				active={props.currentIndex === 1}
+				icon={<CameraOutlinedIcon style={{ color: '#b3b3b6' }} />}
+				// imgSrc="./images/your_media.svg"
+				onClick={props.handleRecordAndCreate}
+			/>
+			<DrawerButtons
+				title="Media"
 				active={props.currentIndex === 0}
 				// imgSrc="./images/your_media.svg"
 				icon={<FolderOpenOutlinedIcon style={{ color: '#b3b3b6' }} />}
 				onClick={props.handleYourMedia}
 				size="25px"
-			/>
-			<DrawerButtons
-				title="Record & Create"
-				active={props.currentIndex === 1}
-				icon={<CameraOutlinedIcon style={{ color: '#b3b3b6' }} />}
-				// imgSrc="./images/your_media.svg"
-				onClick={props.handleRecordAndCreate}
 			/>
 
 			<DrawerButtons
@@ -91,7 +91,7 @@ const MiniDrawer = (props) => {
 				onClick={props.handleMusicAndSFX}
 			/>
 			<DrawerButtons
-				title="Stock Images"
+				title="Images"
 				active={props.currentIndex === 4}
 				icon={<ImageSearchOutlinedIcon style={{ color: '#b3b3b6' }} />}
 				onClick={props.handleStockImages}
