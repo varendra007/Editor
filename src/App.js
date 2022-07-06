@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { makeStyles } from '@mui/styles';
@@ -23,6 +22,12 @@ import BottomDrawerActionContainer from './component/Editor/BottomDrawerActionCo
 import VideoActionContainer from './component/Editor/VideoActionContainer';
 
 const useStyles = makeStyles({
+	rootContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		background: '#16161e',
+	},
 	bottomActionBtnImg: {
 		transform: 'scale(0.9)',
 		transition: 'all 200ms linear 0s',
@@ -51,6 +56,56 @@ const useStyles = makeStyles({
 			transform: 'scale(1)',
 			opacity: '0.8',
 		},
+	},
+	editorRootContainer: {
+		position: 'absolute',
+		background: '#16161e',
+		transition: 'all linear 0.5s',
+		height: '100vh',
+		maxHeight: '100vh',
+		overflow: 'hidden',
+		color: 'white',
+		display: 'flex',
+		flexDirection: 'column',
+	},
+	leftDrawerComponent: {
+		height: '100vh',
+		background: '#212425',
+		borderRight: '2px solid grey',
+		color: 'white',
+		overflow: 'auto',
+		overflowX: 'hidden',
+	},
+	editorHeader: {
+		position: 'absolute',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		width: '100%',
+	},
+	videoContainerParent: {
+		background: '#16161e',
+		width: 'inherit',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		transition: 'all linear 0.5s',
+	},
+	videoContainer: {
+		overflow: 'hidden',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	bottomDrawerParent: {
+		background: '#16161e',
+		borderTop: '2px solid grey',
+		color: 'white',
+		transition: 'width linear 0.5s',
+		display: 'flex',
+		alignItems: 'center',
 	},
 });
 
@@ -155,16 +210,69 @@ function App() {
 		setProgressBarPosition(pos);
 	}, [duration, currentTime, editorWidth]);
 
+	const dimensionConfigStyles = {
+		editorRootContainer: {
+			width: `${
+				isLeftDrawerOpen
+					? window.innerWidth -
+					  (editorDimensionsConstants.drawerComponentWidth +
+							editorDimensionsConstants.miniDrawerWidth)
+					: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
+			}px`,
+			left: isLeftDrawerOpen
+				? `${
+						editorDimensionsConstants.miniDrawerWidth +
+						editorDimensionsConstants.drawerComponentWidth
+				  }px`
+				: `${editorDimensionsConstants.miniDrawerWidth}px`,
+			maxWidth: `${
+				isLeftDrawerOpen
+					? window.innerWidth -
+					  (editorDimensionsConstants.drawerComponentWidth +
+							editorDimensionsConstants.miniDrawerWidth)
+					: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
+			}px`,
+		},
+		videoContainerParent: {
+			height: `${
+				isBottomDrawerOpen
+					? window.innerHeight - editorDimensionsConstants.bottomDrawerHeight
+					: window.innerHeight
+			}px`,
+		},
+		videoContainer: {
+			height: '100%',
+			maxHheight: `${
+				isBottomDrawerOpen
+					? window.innerHeight -
+					  editorDimensionsConstants.bottomDrawerHeight -
+					  50
+					: window.innerHeight - 50
+			}px`,
+			maxWidth: `${
+				isLeftDrawerOpen
+					? window.innerWidth -
+					  (editorDimensionsConstants.drawerComponentWidth +
+							editorDimensionsConstants.miniDrawerWidth +
+							40)
+					: window.innerWidth - editorDimensionsConstants.miniDrawerWidth - 40
+			}px`,
+		},
+		bottomDrawerParent: {
+			width: `${
+				isLeftDrawerOpen
+					? window.innerWidth -
+					  (editorDimensionsConstants.drawerComponentWidth +
+							editorDimensionsConstants.miniDrawerWidth)
+					: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
+			}px`,
+			height: `${editorDimensionsConstants.bottomDrawerHeight}px`,
+		},
+	};
+
 	return (
 		<div className="App">
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'flex-start',
-					background: '#16161e',
-				}}
-			>
+			<div className={classes.rootContainer}>
 				{/* Left Part */}
 				<div>
 					{/* Mini Drawer */}
@@ -193,14 +301,9 @@ function App() {
 						id="drawer-component"
 					>
 						<div
+							className={classes.leftDrawerComponent}
 							style={{
 								width: `${editorDimensionsConstants.drawerComponentWidth}px`,
-								height: '100vh',
-								background: '#212425',
-								borderRight: '2px solid grey',
-								color: 'white',
-								overflow: 'auto',
-								overflowX: 'hidden',
 							}}
 						>
 							{activeIndex === 0 && <YourMedia />}
@@ -215,99 +318,24 @@ function App() {
 				</div>
 				{/* Right Part */}
 				<div
-					style={{
-						position: 'absolute',
-						background: '#16161e',
-						width: `${
-							isLeftDrawerOpen
-								? window.innerWidth -
-								  (editorDimensionsConstants.drawerComponentWidth +
-										editorDimensionsConstants.miniDrawerWidth)
-								: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
-						}px`,
-						color: 'white',
-						display: 'flex',
-						flexDirection: 'column',
-						// justifyContent: 'space-between',
-						left: isLeftDrawerOpen
-							? `${
-									editorDimensionsConstants.miniDrawerWidth +
-									editorDimensionsConstants.drawerComponentWidth
-							  }px`
-							: `${editorDimensionsConstants.miniDrawerWidth}px`,
-						transition: 'all linear 0.5s',
-						height: '100vh',
-						maxHeight: '100vh',
-						overflow: 'hidden',
-						maxWidth: `${
-							isLeftDrawerOpen
-								? window.innerWidth -
-								  (editorDimensionsConstants.drawerComponentWidth +
-										editorDimensionsConstants.miniDrawerWidth)
-								: window.innerWidth - editorDimensionsConstants.miniDrawerWidth
-						}px`,
-					}}
+					className={classes.editorRootContainer}
+					style={dimensionConfigStyles.editorRootContainer}
 					id="main-editor"
 				>
-					<div
-						style={{
-							position: 'absolute',
-							display: 'flex',
-							flexDirection: 'row',
-							justifyContent: 'flex-end',
-							width: '100%',
-						}}
-					>
+					<div className={classes.editorHeader}>
 						<div className={classes.exportBtn}>
 							Export
 							<ArrowDropDownRoundedIcon fontSize="large" />
 						</div>
 					</div>
 					<div
-						style={{
-							background: '#16161e',
-							width: 'inherit',
-							height: `${
-								isBottomDrawerOpen
-									? window.innerHeight -
-									  editorDimensionsConstants.bottomDrawerHeight
-									: window.innerHeight
-							}px`,
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'space-between',
-							alignItems: 'center',
-							transition: 'all linear 0.5s',
-						}}
+						className={classes.videoContainerParent}
+						style={dimensionConfigStyles.videoContainerParent}
 					>
 						{/* VIDEO container HIGHLIGHT */}
 						<div
-							style={{
-								background: '',
-								height: '100%',
-								maxHheight: `${
-									isBottomDrawerOpen
-										? window.innerHeight -
-										  editorDimensionsConstants.bottomDrawerHeight -
-										  50
-										: window.innerHeight - 50
-								}px`,
-								maxWidth: `${
-									isLeftDrawerOpen
-										? window.innerWidth -
-										  (editorDimensionsConstants.drawerComponentWidth +
-												editorDimensionsConstants.miniDrawerWidth +
-												40)
-										: window.innerWidth -
-										  editorDimensionsConstants.miniDrawerWidth -
-										  40
-								}px`,
-								overflow: 'hidden',
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-								justifyContent: 'center',
-							}}
+							style={dimensionConfigStyles.videoContainer}
+							className={classes.videoContainer}
 							id="video-container"
 						>
 							<div
@@ -370,23 +398,8 @@ function App() {
 						}}
 					>
 						<div
-							style={{
-								width: `${
-									isLeftDrawerOpen
-										? window.innerWidth -
-										  (editorDimensionsConstants.drawerComponentWidth +
-												editorDimensionsConstants.miniDrawerWidth)
-										: window.innerWidth -
-										  editorDimensionsConstants.miniDrawerWidth
-								}px`,
-								height: `${editorDimensionsConstants.bottomDrawerHeight}px`,
-								background: '#16161e',
-								borderTop: '2px solid grey',
-								color: 'white',
-								transition: 'width linear 0.5s',
-								display: 'flex',
-								alignItems: 'center',
-							}}
+							style={dimensionConfigStyles.bottomDrawerParent}
+							className={classes.bottomDrawerParent}
 						>
 							<BottomDrawer progressBarPosition={progressBarPosition} />
 						</div>

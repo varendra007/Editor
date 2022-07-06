@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import { UnfoldLessOutlined, UnfoldMoreOutlined } from '@mui/icons-material';
-import editorDimensionsConstants from './editorDimensionsConstants';
 const useStyles = makeStyles({
 	bottomActionBtns: {
 		background: 'rgba(28,28,40,0.8)',
