@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 		transition: 'all 200ms linear 0s',
 		borderRadius: '4px',
 		width: '100%',
-		height: '100px',
+		height: '99px',
 		overflow: 'hidden',
 	},
 });
