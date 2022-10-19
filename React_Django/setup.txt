@@ -1,0 +1,31 @@
+Extensions:
+Prettier
+Django
+Python
+React ES7
+Javascript ES6
+
+pip install:
+django
+django djangorestframework
+
+Project setup:
+django-admin startproject <project_name>
+go to <project name directory>
+
+App setup:
+django-admin startapp <app_name>
+add app to project <project_name>/settings: INSTALLED APPS: 'api.apps.ApiConfig'
+also 'rest_framework'
+
+views: (This will be used to display endpoints)
+make function httpResponse <func_name>
+make urls.py in <app_name>
+
+In <project_name> urls, path('something/', include(<app_name>.urls))
+
+Add url pattern in <app_name>/urls.py too while importing functions from .view
+
+python .\manage.py makemigrations (if we change model)
+python .\manage.py migrate
+python .\manage.py runserver (We get url auto refresh on save)
