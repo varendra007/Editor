@@ -137,7 +137,7 @@ export function YourMedia(props) {
 								<img
 									src="./images/Rectangle.png"
 									alt="img"
-									style={{ width: '130px' }}
+									style={{ width: '129px' }}
 								/>
 								<p className={classes.imgDescription}>Description All</p>
 							</Grid>
