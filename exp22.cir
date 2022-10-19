@@ -1,0 +1,18 @@
+*Mosfet
+.include Mosfet.txt
+M1 2 1 0 0 CMOSN l=0.5u w=2.35u
+M2 4 3 2 0 CMOSN l = 0.5u w=2.35u
+Vgs 6 0 dc 1.55v
+Vin 6 1 dc 0v ac 1mv
+vb 3 0 dc 2.68v
+vdd 5 0 dc 1.8v
+id 5 4 420.14u
+.ac dec 10 1 100000Meg
+.control
+run
+
+plot v(6,1) 
+plot vdb(4) xlog
+
+.endc
+.end
