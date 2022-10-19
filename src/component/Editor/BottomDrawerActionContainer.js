@@ -81,7 +81,7 @@ const BottomDrawerActionContainer = ({
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
-					marginRight: '20px',
+					marginRight: '19px',
 				}}
 			>
 				<BottomActionsBtn imgSrc={'./images/plus.svg'} buttonName="Open" />
