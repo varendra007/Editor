@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 		background: '#292d3e',
 		border: '1px solid rgba(179,179,182,0.5)',
 		transition: 'all 200ms linear 0s',
-		borderRadius: '4px',
+		borderRadius: '3px',
 		width: '100%',
 		height: '100px',
 		overflow: 'hidden',
