@@ -51,7 +51,7 @@ const VideoActionContainer = ({
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
-					marginTop: '5px',
+					marginTop: '6px',
 				}}
 			>
 				<VideoActionBtn
