@@ -1,0 +1,20 @@
+* 3stage opamp macro model
+vin 1 0 dc=0 ac=1
+G1 2 0 1 0 381.24u
+r1 2 0 204k
+c1 2 0 19.6p
+G2 3 0 2 0 381.24u
+r2 3 0 204k
+c2 3 0 19.6p 
+G3 4 0 3 0 694.55u
+r3 4 0 37.5k
+c3 4 0 23n
+
+.ac dec 10 1 10Meg
+
+.control
+run
+
+plot vdb(3) xlog
+.endc
+.end
