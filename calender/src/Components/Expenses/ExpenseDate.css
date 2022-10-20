@@ -1,0 +1,11 @@
+.date{
+    border: 1px solid white;
+    border-radius: 10px;
+    font-size: 70%;
+    font-style: italic;
+    background-color: purple;
+    width: 5%;
+    height: 100%;
+    text-align: center;
+    color: white;
+}
