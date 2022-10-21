@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 	miniDrawerContainer: {
 		background: '#16161e',
 		position: 'absolute',
-		width: `${dimensions.miniDrawerWidth}px`,
+		width: `${dimensions.miniDrawerWidth+10}px`,
 		height: '100vh',
 		left: 0,
 		zIndex: '+10000000000',
