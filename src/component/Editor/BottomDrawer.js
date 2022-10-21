@@ -24,9 +24,9 @@ const useStyles = makeStyles({
 		width: '0',
 		height: '0', 
 		position: 'absolute',
-		borderLeft: '15px solid transparent',
-		borderRight: '15px solid transparent',
-		borderTop: '15px solid #b3b3b6',
+		borderLeft: '10px solid transparent',
+		borderRight: '10px solid transparent',
+		borderTop: '10px solid #b3b3b6',
 		transition: 'all 200ms linear 0s',
 		overflow: 'hidden',
 		// opacity:'0.6'
@@ -35,9 +35,9 @@ const useStyles = makeStyles({
 		width: '0',
 		height: '0', 
 		position: 'absolute',
-		borderLeft: '15px solid transparent',
-		borderRight: '15px solid transparent',
-		borderBottom: '15px solid #b3b3b6',
+		borderLeft: '10px solid transparent',
+		borderRight: '10px solid transparent',
+		borderBottom: '10px solid #b3b3b6',
 		transition: 'all 200ms linear 0s',
 		overflow: 'hidden',
 		// opacity:'0.6'
@@ -63,12 +63,12 @@ const BottomDrawer = ({ progressBarPosition }) => {
 		<>
 			<div 
 				className={classes.arrowDown} 
-				style={{left: `${progressBarPosition - 14}px`,top:'2px'}}
+				style={{left: `${progressBarPosition - 9}px`,top:'2px'}}
 			>
 			</div>
 			<div 
 				className={classes.arrowUp} 
-				style={{left: `${progressBarPosition - 14}px`,bottom:'0px'}}
+				style={{left: `${progressBarPosition - 9}px`,bottom:'0px'}}
 			>
 			</div>
 			<div
