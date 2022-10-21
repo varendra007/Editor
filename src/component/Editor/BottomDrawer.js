@@ -30,6 +30,17 @@ const useStyles = makeStyles({
 		transition: 'all 200ms linear 0s',
 		overflow: 'hidden',
 		opacity:'0.6'
+	},
+	arrowUp:{
+		width: '0',
+		height: '0', 
+		position: 'absolute',
+		borderLeft: '15px solid transparent',
+		borderRight: '15px solid transparent',
+		borderBottom: '15px solid #fff',
+		transition: 'all 200ms linear 0s',
+		overflow: 'hidden',
+		opacity:'0.6'
 	}
 });
 export function TransitionBottom(props) {
@@ -53,6 +64,11 @@ const BottomDrawer = ({ progressBarPosition }) => {
 			<div 
 				className={classes.arrowDown} 
 				style={{left: `${progressBarPosition - 14}px`,top:'2px'}}
+			>
+			</div>
+			<div 
+				className={classes.arrowUp} 
+				style={{left: `${progressBarPosition - 14}px`,bottom:'0px'}}
 			>
 			</div>
 			<div
