@@ -46,7 +46,8 @@ const DrawerButtons = (props) => {
 			style={{
 				padding: '13px 0',
 				cursor: 'pointer',
-				background: props.active ? '#272731' : '',
+				// background: props.active ? '#272731' : '',
+				background: props.active ? 'rgba(97, 37, 153,0.25)' : '',
 			}}
 			onClick={props.onClick}
 		>
