@@ -26,10 +26,10 @@ const useStyles = makeStyles({
 		position: 'absolute',
 		borderLeft: '15px solid transparent',
 		borderRight: '15px solid transparent',
-		borderTop: '15px solid #fff',
+		borderTop: '15px solid #b3b3b6',
 		transition: 'all 200ms linear 0s',
 		overflow: 'hidden',
-		opacity:'0.6'
+		// opacity:'0.6'
 	},
 	arrowUp:{
 		width: '0',
@@ -37,10 +37,10 @@ const useStyles = makeStyles({
 		position: 'absolute',
 		borderLeft: '15px solid transparent',
 		borderRight: '15px solid transparent',
-		borderBottom: '15px solid #fff',
+		borderBottom: '15px solid #b3b3b6',
 		transition: 'all 200ms linear 0s',
 		overflow: 'hidden',
-		opacity:'0.6'
+		// opacity:'0.6'
 	}
 });
 export function TransitionBottom(props) {
